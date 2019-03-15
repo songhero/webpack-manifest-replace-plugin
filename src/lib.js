@@ -19,11 +19,15 @@ export function buildChunkMap(compilation) {
   return chunkMap;
 }
 
-export function replaceSource(file, chunkMap) {
+export function replaceSource(file, chunkMap, replaceResourcePath) {
   let source = fs.readFileSync(file, 'utf8');
 
   for (const key of chunkMap.keys()) {
-    source = source.replace(new RegExp(key, 'gm'), chunkMap.get(key));
+    if(replaceResourcePath) {
+      source = source.replace(new RegExp('/.+' + key, 'gi'), replaceResourcePath + chunkMap.get(key));
+    } else {
+      source = source.replace(new RegExp(key, 'gm'), chunkMap.get(key));
+    }
   }
 
   return source;

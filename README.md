@@ -31,6 +31,7 @@ module.exports = {
     new ManifestReplacePlugin({
       include: path.resolve(__dirname, 'src'),
       test: /\.(jsp|php|htm|html)$/,
+      replaceResourcePath: '/static/dist/'
     })
   ]
   ...
@@ -44,6 +45,7 @@ module.exports = {
 |**`include`**|`{String}`|`undefined `| Files to include. |
 |**`test`**|`{Pattern}`|`/\.(htm\|html)$/`| Test to match files against. |
 |**`outputDir`**|`{String}`|`Webpack output.path`| Output directory for replaced files. |
+|**`replaceResourcePath`**|`{String}`|`undefined`| Resource file replace path. |
 
 ## License
 

@@ -28,12 +28,13 @@ class ManifestReplacePlugin {
       const relativeTargetDir = options.outputDir
         ? path.relative(compiler.options.output.path, options.outputDir)
         : '';
+      const replaceResourcePath = options.replaceResourcePath;
 
       glob
         .sync(path.join(options.include, '**/**'), {nodir: true})
         .filter((file) => options.test.test(path.basename(file)))
         .forEach((file) => {
-          const source = replaceSource(file, chunkMap);
+          const source = replaceSource(file, chunkMap, replaceResourcePath);
 
           const assetKey = path.join(
             relativeTargetDir,
