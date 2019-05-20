@@ -24,7 +24,13 @@ export function replaceSource(file, chunkMap, replaceResourcePath) {
 
   for (const key of chunkMap.keys()) {
     if(replaceResourcePath) {
-      source = source.replace(new RegExp('/.+' + key, 'gi'), replaceResourcePath + chunkMap.get(key));
+      let regexp1 = new RegExp('(src|href)=".+' + key + '."', 'gi');
+      let regexp2 = new RegExp('/.+' + key, 'gi');
+      let srcPath = regexp2.exec(regexp1.exec(source));
+
+      if(srcPath) {
+        source = source.replace(new RegExp(srcPath, 'gi'), replaceResourcePath + chunkMap.get(key));
+      }
     } else {
       source = source.replace(new RegExp(key, 'gm'), chunkMap.get(key));
     }
